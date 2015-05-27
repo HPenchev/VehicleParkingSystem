@@ -20,11 +20,15 @@ public class RegularOvertimeCharger implements VehicleCharger {
         BigDecimal bill = 
                 vehicle.getRegularRate().multiply(new BigDecimal(vehicle.getReservedHours()));
         
+        
+        
         if (hours > vehicle.getReservedHours()) {
             int extraTime = hours - vehicle.getReservedHours();
-            BigDecimal overtimeRate = vehicle.getOvertimeRate();
+            
+            BigDecimal overtimeRate = vehicle.getOvertimeRate();            
             BigDecimal extraCharge = overtimeRate.multiply(new BigDecimal(extraTime));
-            bill.add(extraCharge);
+            BigDecimal newBill = bill.add(extraCharge);
+            bill = newBill;
         }
         
         return bill;

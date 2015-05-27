@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +15,7 @@ import vehicles.*;
 //For testing purposes only. Feel free to delete it.
 public class Main {  
 
+    public final static BigDecimal test = new BigDecimal(3.5f);
     public static void main(String[] args) throws ParseException {
         Parking parking = new VehicleParking(
                 new RegularOvertimeCharger(),
@@ -22,7 +24,7 @@ public class Main {
                 new HashMap<contracts.Vehicle, Date>());
         
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy/hh/mm/ss");
-        Date d = sdf.parse("23/05/2015/20/00/00");
+        Date d = sdf.parse("25/05/2015/20/00/00");
         
         Vehicle car = new Car("AA2322BB", "Pesho", 1);        
         Vehicle lorry = new Lorry("BB2343JJ", "Gosho", 3);
@@ -32,12 +34,19 @@ public class Main {
         System.out.println(parking.insertVehicle(lorry, 2, new Date()));
         System.out.println(parking.insertVehicle(motorbike, 3, new Date()));
         
+        //System.out.println(car.getOvertimeRate());
+        
         System.out.println(parking.exitVehicle("AA2322BB"));
         System.out.println(parking.chargeVehicle(car, new Date()));
         System.out.println(parking.exitVehicle("sdfdsf"));
         
+        BigDecimal a = new BigDecimal(3.5f);
+        int b = 3;
+        
+        //System.out.println(a.multiply(new BigDecimal(b)));
         
         
-       // System.out.println(par)
+//        BigDecimal rate = Constants.CAR_OVERTIME_RATE;
+//        System.out.println(rate);
     }
 }

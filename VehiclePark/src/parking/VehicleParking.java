@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import contracts.*;
 
@@ -24,6 +26,18 @@ public class VehicleParking implements Parking {
     this.parkingPlaces = parkingPlaces;
     this.vehiclesParked = vehiclesParked;
     this.timeOfParking = timeOfParking;
+    }
+    
+    @Override
+    public Set<Integer> takeFreePlaces() {
+        Set<Integer> freeParkingPlaces = new LinkedHashSet<Integer>();
+        for (int i = 1; i <= this.parkingPlaces; i++) {
+            if (!this.vehiclesParked.containsKey(i)) {
+                freeParkingPlaces.add(i);
+            }
+        }
+        
+        return freeParkingPlaces;
     }
 
     @Override
