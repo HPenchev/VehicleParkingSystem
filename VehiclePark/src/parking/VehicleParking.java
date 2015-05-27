@@ -57,8 +57,7 @@ public class VehicleParking implements Parking {
         this.vehiclesParked.put(parkingPlace, vehicle);
         this.timeOfParking.put(vehicle, startTime);
         
-        return "Successful entry";
-        
+        return "Successful entry";        
     }
 
     @Override

@@ -10,19 +10,19 @@ import contracts.*;
 //vehicles entry and exit by updating parking field information as well as database.
 
 public class Engine {    
-    private Engine processor;
+    private static Engine processor;
     private Parking parking;
     
     private Engine() {
         this.parking = this.loadParking();
     }
     
-    public Engine getInstance() {
-        if (this.processor == null) {
-            this.processor = new Engine();
+    public static Engine getInstance() {
+        if (processor == null) {
+            processor = new Engine();
         }
         
-        return this.processor;
+        return processor;
     }  
     
     private Parking loadParking() {

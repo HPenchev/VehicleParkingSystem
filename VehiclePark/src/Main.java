@@ -15,6 +15,7 @@ import vehicles.*;
 //For testing purposes only. Feel free to delete it.
 public class Main {  
 
+    Engine eng = Engine.getInstance();
     public final static BigDecimal test = new BigDecimal(3.5f);
     public static void main(String[] args) throws ParseException {
         Parking parking = new VehicleParking(
