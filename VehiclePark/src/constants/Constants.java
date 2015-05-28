@@ -7,7 +7,7 @@ import enums.VehicleType;
 
 public class Constants {
     public final static Pattern LICENSE_PLATE_VALIDATION = 
-            Pattern.compile("[A-Za-z]{1,2}\\d{4}[A-Za-z]{1,2}$");
+            Pattern.compile("[A-Z]{1,2}\\d{4}[A-Z]{1,2}$");
     
     public final static BigDecimal CAR_REGULAR_RATE = new BigDecimal(2);
     public final static BigDecimal CAR_OVERTIME_RATE = new BigDecimal(3.5f);

@@ -383,9 +383,9 @@ public class MainForm extends javax.swing.JFrame {
                 this.AddLicense.setText("");
             }
 
-        } else
-
+        } else {
             JOptionPane.showMessageDialog(null, "The car was NOT removed!");
+        }
     }                                         
 
     private void carActionPerformed(java.awt.event.ActionEvent evt) {                                    
