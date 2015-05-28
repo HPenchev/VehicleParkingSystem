@@ -15,9 +15,11 @@ public interface Parking {
     
     int findVehiclesPlace(String licensePlate);
     
-    Collection<contracts.Vehicle> findVehiclesByOwner(String owner);
+    //Collection<contracts.Vehicle> findVehiclesByOwner(String owner);
     
     BigDecimal chargeVehicle(Vehicle vehicle, Date exitTime);
     
     Set<Integer> takeFreePlaces();
+    
+    contracts.Vehicle getParkedVehicle(String licensePlate);
 }

@@ -92,17 +92,18 @@ public class VehicleParking implements Parking {
         return placeOfCar;
     }
 
-    @Override
-    public Collection<Vehicle> findVehiclesByOwner(String owner) {
-        List<Vehicle> vehiclesByOwner = new ArrayList<Vehicle>();
-        for (Vehicle vehicle : this.vehiclesParked.values()) {
-            if (vehicle.getOwner().equals(owner)) {
-                vehiclesByOwner.add(vehicle);
-            }
-        }
-        
-        return vehiclesByOwner;
-    }
+    // To be implemented in future
+//    @Override
+//    public Collection<Vehicle> findVehiclesByOwner(String owner) {
+//        List<Vehicle> vehiclesByOwner = new ArrayList<Vehicle>();
+//        for (Vehicle vehicle : this.vehiclesParked.values()) {
+//            if (vehicle.getOwner().equals(owner)) {
+//                vehiclesByOwner.add(vehicle);
+//            }
+//        }
+//        
+//        return vehiclesByOwner;
+//    }
     
     @Override
     public BigDecimal chargeVehicle(Vehicle vehicle, Date exitTime) {
@@ -113,6 +114,15 @@ public class VehicleParking implements Parking {
         
         this.timeOfParking.remove(vehicle);
         return bill;
+    }
+    
+    @Override
+    public contracts.Vehicle getParkedVehicle(String licensePlate){
+        for (Vehicle v : vehiclesParked.values()){
+            if(v.getLicensePlate().equals(licensePlate))
+                return v;
+        }
+        return null;
     }
 
     private boolean checkLicensePlate(String licensePlate) {
