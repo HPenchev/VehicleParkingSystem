@@ -1,15 +1,14 @@
 package parking;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import contracts.*;
+import contracts.Parking;
+import contracts.Vehicle;
+import contracts.VehicleCharger;
 
 public class VehicleParking implements Parking {
     VehicleCharger charger;

@@ -5,7 +5,6 @@ import java.util.Date;
 
 import contracts.Vehicle;
 import contracts.VehicleCharger;
-import enums.VehicleType;
 
 public class RegularOvertimeCharger implements VehicleCharger {
 

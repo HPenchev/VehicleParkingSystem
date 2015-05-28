@@ -10,12 +10,14 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
+import vehicles.Car;
+import vehicles.Lorry;
+import vehicles.Motorbike;
 import contracts.Vehicle;
 
 /**
@@ -35,7 +37,10 @@ public class DataBaseUtil {
 	private static final String INSERTQUERY1 = "INSERT INTO public.parking VALUES (";
 	private static final String INSERTQUERY2 = ");";
 	private static final String REMOVEQUERY = "DELETE FROM public.parking WHERE licenseplate = ";
+	private static final String SELECT_ALL = "select * from public.parking";
 	
+	private static Map<Integer, Vehicle> parkingPlaces = new HashMap<Integer, Vehicle>();
+	private static Map<Vehicle, Date> parkingTime = new HashMap<Vehicle, Date>();
 	
 	private static void connect(){
 		 try {
@@ -76,7 +81,10 @@ public class DataBaseUtil {
 			vehicleTypeNumber = 3;
 			break;
 		}
-		st.executeUpdate(INSERTQUERY1 + parkingPlace +",'" + vehicle.getLicensePlate() + "','" + vehicle.getOwner() + "'," + vehicle.getReservedHours() + ",'" + startTimeOfParking + "'," + vehicleTypeNumber + "," + Double.parseDouble(vehicle.getRegularRate().toString()) + "," + Double.parseDouble(vehicle.getOvertimeRate().toString()) +  INSERTQUERY2);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(startTimeOfParking);
+        long time = startTimeOfParking.getTime();
+		st.executeUpdate(INSERTQUERY1 + parkingPlace +",'" + vehicle.getLicensePlate() + "','" + vehicle.getOwner() + "'," + vehicle.getReservedHours() + ",'" + time + "'," + vehicleTypeNumber + "," + Double.parseDouble(vehicle.getRegularRate().toString()) + "," + Double.parseDouble(vehicle.getOvertimeRate().toString()) +  INSERTQUERY2);
         disconnect();
     }
     
@@ -86,13 +94,42 @@ public class DataBaseUtil {
         disconnect();
     }
 
-    //To be implemented. Download parking places and vehicles from database;
-    public static Map<Integer, Vehicle> loadParkedVehicles() {
-        return new HashMap<Integer, Vehicle>();
+    public static Map<Integer, Vehicle> loadParkedVehicles() throws SQLException{
+    	loadDatabaseInformation();
+    	return parkingPlaces;
     }
     
-    //To be implemented. Download vehicles and parking time from database;
-    public static Map<Vehicle, Date> loadParkingTime() {
-        return new HashMap<Vehicle, Date>();
+    private static void loadDatabaseInformation() throws SQLException {
+    	connect();
+    	rs = st.executeQuery(SELECT_ALL);
+    	while (rs.next()) {
+    		Vehicle vehicle;
+    		int parkingPlace = rs.getInt("parkingplace");
+    		Date parkingDate = new Date(rs.getLong("entertime"));
+    		
+    		
+    		switch (rs.getInt("vehicletype")) {
+			case 1:
+				vehicle = new Motorbike(rs.getString("licenseplate"), rs.getString("owner"), rs.getInt("reservedHours"));
+				break;
+			case 2:
+				vehicle = new Car(rs.getString("licenseplate"), rs.getString("owner"), rs.getInt("reservedHours"));
+				break;
+			case 3:
+				vehicle = new Lorry(rs.getString("licenseplate"), rs.getString("owner"), rs.getInt("reservedHours"));
+				break;
+			default:
+				throw new IllegalStateException("Unknow type of vehicle");
+			}
+    		
+    		parkingPlaces.put(parkingPlace, vehicle);
+    		parkingTime.put(vehicle, parkingDate);
+		}
+    	disconnect();
+    }
+    
+    public static Map<Vehicle, Date> loadParkingTime() throws SQLException {
+    	loadDatabaseInformation();
+    	return parkingTime;
     }
 }

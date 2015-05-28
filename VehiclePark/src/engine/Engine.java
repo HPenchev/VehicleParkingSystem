@@ -1,5 +1,6 @@
 package engine;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Map;
 
@@ -11,7 +12,6 @@ import contracts.*;
 import contracts.Vehicle;
 
 import java.math.BigDecimal;
-import java.util.AbstractMap;
 import java.util.Set;
 
 import database.DataBaseUtil;
@@ -23,11 +23,11 @@ public class Engine {
     private static Engine processor;
     private final Parking parking;
 
-    private Engine() {
+    private Engine() throws SQLException {
         this.parking = this.loadParking();
     }
 
-    public static Engine getInstance() {
+    public static Engine getInstance() throws SQLException {
         if (processor == null) {
             processor = new Engine();
         }
@@ -35,7 +35,7 @@ public class Engine {
         return processor;
     }
 
-    private Parking loadParking() {
+    private Parking loadParking() throws SQLException {
         VehicleCharger charger = new RegularOvertimeCharger();
         int parkingPlaces = Constants.PARKING_PLACES;
         Map<Integer, Vehicle> parkedVehicles = DataBaseUtil.loadParkedVehicles();
@@ -45,7 +45,7 @@ public class Engine {
     }
 
     public int addCar(String licensePlate, String owner, int reservedTime, String vehicleType, int parkingPlace,
-            Date startTime) {
+            Date startTime) throws NumberFormatException, SQLException {
         Vehicle vehicle;
         switch (vehicleType) {
             case "Car":
@@ -81,10 +81,9 @@ public class Engine {
         }
     }
 
-    public Map.Entry<Integer, BigDecimal> chargeVehicle(String licensePlate) {
+    public BigDecimal chargeVehicle(String licensePlate) throws SQLException {
         Date currentTime = new Date();
         Vehicle v = parking.getParkedVehicle(licensePlate);
-        Integer place = parking.findVehiclesPlace(licensePlate);
         String exitStatus = parking.exitVehicle(licensePlate);
         
         switch (exitStatus) {
@@ -93,7 +92,7 @@ public class Engine {
             case "Car successfully removed":
                 BigDecimal bill = parking.chargeVehicle(v, currentTime);
                 database.DataBaseUtil.removeVehicleFromBase(v);
-                return new AbstractMap.SimpleEntry<>(place, bill);
+                return bill;
             default:
                 throw new IllegalStateException();
         }
