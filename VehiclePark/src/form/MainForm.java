@@ -8,10 +8,12 @@ package form;
 
 import engine.Engine;
 import vehicles.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
+
 import javax.swing.JOptionPane;
 
 
@@ -300,38 +302,34 @@ public class MainForm extends javax.swing.JFrame {
         String license = AddLicense.getText();
         String owner = OwnerText.getText();
         String time = ReserveTimeText.getText();
-        String selectionRadio = "";
-        boolean lic;
-        boolean own;
-        boolean timeRes;
-        boolean selectCar = false;
+        String carType = "";
+        boolean isLisenceValid;
+        boolean isOwnerValid;
+        boolean isReservationTimeValid;
+        boolean isCarSelected = false;
         int reservedTime = Integer.parseInt(time);
 
-        lic = license.matches("[A-Z]+[A-Z]+\\d{4}+[A-Z]+[A-Z]");
-        own = owner.matches("[A-Z][a-z]+( [A-Z][a-z]+)");
-        timeRes = time.matches("[0-9]*");
-
-        Vehicle newVehicle;
+        isLisenceValid = license.matches("[A-Z]+[A-Z]+\\d{4}+[A-Z]+[A-Z]");
+        isOwnerValid = owner.matches("[A-Z][a-z]+( [A-Z][a-z]+)");
+        isReservationTimeValid = time.matches("[0-9]*");
 
         if (car.isSelected()) {
-            selectionRadio = car.getText();
-            selectCar = true;
-            newVehicle = new Car(license, owner, reservedTime);
-
+            carType = car.getText();
+            isCarSelected = true;
         }
         if (lorry.isSelected()) {
-            selectionRadio = lorry.getText();
-            selectCar = true;
+            carType = lorry.getText();
+            isCarSelected = true;
         }
         if (motorbike.isSelected()) {
-            selectionRadio = motorbike.getText();
-            selectCar = true;
+            carType = motorbike.getText();
+            isCarSelected = true;
 
         }
 
-        if (lic == true && own == true && timeRes == true && selectCar == true) {
+        if (isLisenceValid == true && isOwnerValid == true && isReservationTimeValid == true && isCarSelected == true) {
             Date currentTime = new Date();
-            int addStatus = engine.addCar(license, owner, reservedTime, selectionRadio, place, currentTime);
+            int addStatus = engine.addCar(license, owner, reservedTime, carType, place, currentTime);
 
             switch (addStatus) {
                 case 1:
@@ -359,10 +357,6 @@ public class MainForm extends javax.swing.JFrame {
 
         } else
             JOptionPane.showMessageDialog(null, "Car was NOT added!");
-      
-      
-      
-   
     }                                      
     
     private void AddLicenseActionPerformed(java.awt.event.ActionEvent evt) {                                           
@@ -373,11 +367,11 @@ public class MainForm extends javax.swing.JFrame {
      String license = AddLicense.getText();
         Map.Entry<Integer, BigDecimal> entry;
 
-        boolean lic;
+        boolean IsLicenseRight;
 
-        lic = license.matches("[A-Z]+[A-Z]+\\d{4}+[A-Z]+[A-Z]");
+        IsLicenseRight = license.matches("[A-Z]+[A-Z]+\\d{4}+[A-Z]+[A-Z]");
 
-        if (lic == true) {
+        if (IsLicenseRight == true) {
 
             entry = engine.chargeVehicle(license);
             if (entry == null) {
@@ -479,7 +473,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JRadioButton lorry;
     private javax.swing.JRadioButton motorbike;
-    private static javax.swing.JComboBox parkingPlace;
+    private static javax.swing.JComboBox<Integer> parkingPlace;
     private javax.swing.JLabel parkingPlaceLabel;
     // End of variables declaration                   
 }
