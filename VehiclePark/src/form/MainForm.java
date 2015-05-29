@@ -165,7 +165,7 @@ public class MainForm extends javax.swing.JFrame {
         parkingPlaceLabel.setText("Parking place");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(
-                "C:\\Users\\user\\Documents\\NetBeansProjects\\VehicleParkingSystem\\VehiclePark\\11120581_10204037617931859_1559957360_n.png")); // NOI18N
+                "11120581_10204037617931859_1559957360_n.png")); // NOI18N
 
         findCar.setBackground(new java.awt.Color(204, 204, 255));
         findCar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
