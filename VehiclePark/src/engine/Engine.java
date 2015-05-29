@@ -45,7 +45,7 @@ public class Engine {
     }
 
     public int addCar(String licensePlate, String owner, int reservedTime, String vehicleType, int parkingPlace,
-            Date startTime) throws NumberFormatException, SQLException {
+            Date startTime) throws SQLException {
         Vehicle vehicle;
         switch (vehicleType) {
             case "Car":

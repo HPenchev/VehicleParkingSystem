@@ -67,7 +67,7 @@ public class DataBaseUtil {
          }
 	}
 	
-	public static void addVehicleToBase(Vehicle vehicle, int parkingPlace, Date startTimeOfParking) throws NumberFormatException, SQLException{
+	public static void addVehicleToBase(Vehicle vehicle, int parkingPlace, Date startTimeOfParking) throws SQLException {
         connect();
         int vehicleTypeNumber = 0;
         switch (vehicle.getVehicleType()) {
